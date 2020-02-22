@@ -1,0 +1,90 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.8.RELEASE")
+        classpath("org.springframework.cloud:spring-cloud-contract-gradle-plugin:1.2.6.RELEASE")
+        classpath("org.ajoberstar:grgit:2.3.0")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7")
+        classpath("com.lmig.dna:dna-code-quality-plugin:0.19.0")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.5.2")
+        classpath('info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.0')
+        classpath('org.owasp:dependency-check-gradle:5.2.1')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'jacoco'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven-publish'
+apply plugin: 'spring-cloud-contract'
+apply plugin: 'org.sonarqube'
+apply plugin: 'com.lmig.dna.quality'
+apply plugin: 'com.gorylenko.gradle-git-properties'
+apply plugin: 'info.solidsoft.pitest'
+apply plugin: 'org.owasp.dependencycheck'
+apply plugin: 'org.sonarqube'
+
+group = 'com.learning.java'
+description = "Learning ${project.name}"
+
+dependencyManagement {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, "seconds"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR4"
+        mavenBom "org.springframework.cloud:spring-cloud-config-dependencies:2.1.2.RELEASE"
+    }
+}
+
+ext {
+    git = org.ajoberstar.grgit.Grgit.open(currentDir: file('.'))
+}
+
+dependencies {
+    // Apache CXF
+    compile "org.apache.cxf:cxf-rt-frontend-jaxws:3.3.4"
+    compile "org.apache.cxf:cxf-rt-transports-http-jetty:3.3.4"
+
+    // Spring Boot
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile "org.springframework.boot:spring-boot-starter-web"
+
+    // Spring Cloud
+    compile 'org.springframework.cloud:spring-cloud-starter'
+    compile 'org.springframework.cloud:spring-cloud-starter-config'
+    compile 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    compile 'org.springframework.cloud:spring-cloud-commons'
+
+    // Spring Security
+    compile 'org.springframework.cloud:spring-cloud-security'
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.7.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+    compile 'org.springframework.security:spring-security-web'
+    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.4.RELEASE'
+    
+    // JPA Data
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL Connector-Java
+    compile 'mysql:mysql-connector-java:8.0.17'
+
+    compile 'com.google.guava:guava:27.0.1-android'
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.4.2"
+    testCompile "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testCompile "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    testCompile "io.cucumber:cucumber-java8:4.3.0"
+    testCompile "io.cucumber:cucumber-spring:4.3.0"
+    testCompile "io.cucumber:cucumber-junit:4.3.0"
+
+    testCompile "pl.pojo:pojo-tester:0.7.6"
+}

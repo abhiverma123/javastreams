@@ -1,0 +1,44 @@
+#vim
+## Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+## Session
+Session.vim
+
+## Temporary
+.netrwhist
+*~
+## Auto-generated tag files
+tags
+## Persistent undo
+[._]*.un~
+
+#intellij
+.idea/
+*.iml
+out/
+
+#eclipse
+.settings/
+.classpath
+.project
+org.eclipse.buildship.core.prefs
+
+#osx
+.DS_Store
+
+# build artifacts
+bin/
+build/
+.gradle/
+pom.xml
+target/
+/.checkstyle
+git.properties
+
+# sonar artifacts
+.sonar/
