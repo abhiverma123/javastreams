@@ -29,11 +29,6 @@ public class BasicStreamsOperations {
 		return  emplList;
 	}
 
-	public Employee createEmployee1(String firstName, String lastName, String role, double salary) {
-		Employee e = new Employee(firstName, lastName, role, salary);
-		return e;
-	}
-
 	public long give_me_count_of_employees_in_list_using_streams(List<Employee> employeeList) {
 		return employeeList.stream().count();
 	}
